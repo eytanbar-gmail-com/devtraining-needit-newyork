@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition/>
+        <conditional>false</conditional>
+        <name>Get DataXoom Info</name>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period>1970-01-01 02:00:00</run_period>
+        <run_start>2019-10-18 07:16:32</run_start>
+        <run_time>1970-01-01 08:00:00</run_time>
+        <run_type>periodically</run_type>
+        <script><![CDATA[try {
+
+    var username = gs.getProperty('x_58872_needit.API Username');
+    var password = gs.getProperty('x_58872_needit.API Password');
+    var r = new sn_ws.RESTMessageV2('x_58872_needit.Get Account Info', 'Get Account Info');
+
+    r.setStringParameter("username", username);
+    r.setStringParameter("password", password);
+    var response = r.executeAsync();
+    response.waitForResponse(30);
+    var responseBody = response.getBody();
+    var httpStatus = response.getStatusCode();
+    var res = JSON.parse(response.getBody());
+    if (res.result == "ok") {
+        gr = new GlideRecord("x_58872_needit_dataxoom_account_info");
+        gr.query();
+        if (gr.next()) {
+            gr.account_name = res.accountInfo.accountName;
+            gr.balance = res.accountInfo.accountBalance;
+            gr.currentcharges = res.accountInfo.currentCharges;
+            gr.active = res.accountInfo.active;
+            gr.suspended = res.accountInfo.suspended;
+            gr.disconnected = res.accountInfo.disconnected;
+            gr.used_gb = res.accountInfo.usedGB;
+            gr.update();
+
+        } else {
+            gr.account_name = res.accountInfo.accountName;
+            gr.balance = res.accountInfo.accountBalance;
+            gr.currentcharges = res.accountInfo.currentCharges;
+            gr.active = res.accountInfo.active;
+            gr.suspended = res.accountInfo.suspended;
+            gr.disconnected = res.accountInfo.disconnected;
+            gr.used_gb = res.accountInfo.usedGB;
+            gr.insert();
+        }
+        gr = new GlideRecord("x_58872_needit_subscribers");
+        gr.query();
+        gr.deleteMultiple();
+        for (var i = 0; i < res.accountSubscribers.length; i++) {
+            gr.first_name = res.accountSubscribers[i].FIRST_NAME;
+            gr.last_name = res.accountSubscribers[i].LAST_NAME;
+			gr.iccid = res.accountSubscribers[i].ICCID;
+			gr.imei = res.accountSubscribers[i].IMEI;
+			gr.phone_number = res.accountSubscribers[i].PHONE_NUMBER;
+			gr.status = res.accountSubscribers[i].STATUS;
+			gr.insert();
+        }
+
+
+    }
+
+} catch (ex) {
+
+}]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-10-18 18:09:29</sys_created_on>
+        <sys_id>c0fb41461b688010b8b442edee4bcbc4</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>Get DataXoom Info</sys_name>
+        <sys_package display_value="DataXoom" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DataXoom">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sysauto_script_c0fb41461b688010b8b442edee4bcbc4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-10-19 17:29:40</sys_updated_on>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>
