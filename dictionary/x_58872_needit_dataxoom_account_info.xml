@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element label="Dataxoom Account Info" max_length="40" name="x_58872_needit_dataxoom_account_info" type="collection">
-        <element label="Account Name" max_length="255" name="account_name" type="string_full_utf8"/>
-        <element label="active" max_length="40" name="active" type="integer"/>
-        <element label="balance" max_length="20" name="balance" type="currency"/>
-        <element label="Current Charges" max_length="20" name="currentcharges" type="currency"/>
-        <element label="disconnected" max_length="40" name="disconnected" type="integer"/>
-        <element label="suspended" max_length="40" name="suspended" type="integer"/>
-        <element label="Used Gb" max_length="20" name="used_gb" type="decimal"/>
+        <element label="Account Name" max_length="255" name="account_name" read_only="true" type="string_full_utf8"/>
+        <element label="Active" max_length="40" name="active" read_only="true" type="integer"/>
+        <element label="Balance" max_length="20" name="balance" read_only="true" type="currency"/>
+        <element label="Current Charges" max_length="20" name="currentcharges" read_only="true" type="currency"/>
+        <element label="Disconnected" max_length="40" name="disconnected" read_only="true" type="integer"/>
+        <element label="Suspended" max_length="40" name="suspended" read_only="true" type="integer"/>
+        <element label="Used Gb" max_length="20" name="used_gb" read_only="true" type="decimal"/>
     </element>
 </database>

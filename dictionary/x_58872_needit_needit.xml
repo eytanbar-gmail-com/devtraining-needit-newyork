@@ -5,7 +5,11 @@
         <element label="New field 1" max_length="40" name="new_field_1" type="string"/>
         <element label="Phone Number" mandatory="true" max_length="10" name="phone_number" type="string"/>
         <element choice="3" default="UpdateSubscriberName" label="Request Type" max_length="40" name="request_type" type="string">
-            <choice/>
+            <choice>
+                <element inactive_on_update="false" label="Restore" value="restore"/>
+                <element inactive_on_update="false" label="Suspend" value="suspend"/>
+                <element inactive_on_update="false" label="Update Subscriber Name" value="UpdateSubscriberName"/>
+            </choice>
         </element>
         <element attributes="edge_encryption_enabled=true" label="Other" max_length="40" name="u_other" type="string"/>
         <element label="Requested for" mandatory="true" max_length="32" name="u_requested_for" reference="sys_user" type="reference"/>
